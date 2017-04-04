@@ -1,4 +1,4 @@
-# Pop up from Single Image #
+# Pop Single Image #
 This code contains algorithm to pop up a 3D plane model from images. Given a RGB and ground segmentation image, the algorithm detects edges and selecs the ground-wall boundary edges then pops up 3D point cloud.
 
 **Authors:** [Shichao Yang](http://www.frc.ri.cmu.edu/~syang/), [Sebastian Scherer](http://theairlab.org/)
@@ -20,7 +20,7 @@ This code contains several ros packages. We test it in **ROS indigo + Ubuntu 14.
 mkdir -p ~/popup_ws/src
 cd ~/popup_ws/src
 catkin_init_workspace
-git clone TODO改掉！！！
+git clone git@github.com:shichaoy/pop_up_image.git
 ```
 
 ### Install dependency packages of python
