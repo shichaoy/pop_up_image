@@ -12,7 +12,7 @@ If you use the code in your research work, please cite the above paper. Please d
 
 
 
-# Installation#
+# Installation
 
 ### Prerequisites
 This code contains several ros packages. We test it in **ROS indigo + Ubuntu 14.04**. Create or use existing a ros workspace.
