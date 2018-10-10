@@ -108,8 +108,8 @@ struct CV_EXPORTS KeyLine
    
    bool inlier=true; // add by me
    
-  /** orientation of the line, start from positive x, clockwise is positive. atan2(△y,△x) end-start   [-pi,pi] 
-   since I make the line start from left, this angle is [-90 90]*/
+  /** orientation of the line, start from positive x, clockwise is positive. atan2(△y,△x) end-start  radians [-pi,pi] 
+   since I make the line start from left, this angle is [-pi/2 pi/2]*/
   float angle;
 
   /** object ID, that can be used to cluster keylines by the line they represent, to comptue descriptors, in each octave, [0,1,2...N]*/

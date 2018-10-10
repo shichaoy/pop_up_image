@@ -1,4 +1,4 @@
 intervaltree
-skimage
+scikit-image
 cython
 numpy

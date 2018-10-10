@@ -68,7 +68,7 @@ bool fill_line_information(KeyLine* kl, float octaveScale, const Size& oct_image
 // lines mat is in the detected octaves
 // length_threshold is in original space
 void mat_to_keylines(const cv::Mat& linesmat_src, std::vector< KeyLine>& keylines_out, 
-			  int raw_img_width, int raw_img_height, float raw_length_threshold, float scaling,
+			  int raw_img_width, int raw_img_height, float raw_length_threshold, float close_boundary_threshold, float scaling,
 			  int octave_id,float each_octave_scale
 		    )
 {
@@ -76,7 +76,7 @@ void mat_to_keylines(const cv::Mat& linesmat_src, std::vector< KeyLine>& keyline
    keylines_out.clear();
    float octave_scale = pow(each_octave_scale,octave_id);
    
-   float pre_boundary_thre=10.0 / octave_scale; // LSD sometimes detect very close edge to the boundary, not using them
+   float pre_boundary_thre = close_boundary_threshold / octave_scale; // LSD sometimes detect very close edge to the boundary, not using them
    float octave_length_thre = raw_length_threshold / octave_scale;
    
    int oct_img_width = raw_img_width / octave_scale;
@@ -89,7 +89,7 @@ void mat_to_keylines(const cv::Mat& linesmat_src, std::vector< KeyLine>& keyline
    {
      KeyLine kl;
      kl.sPointInOctaveX = linesmat_src.at<float>(j,0)*scaling;  // scaling might be used for downsampling
-     kl.sPointInOctaveX = linesmat_src.at<float>(j,1)*scaling;
+     kl.sPointInOctaveY = linesmat_src.at<float>(j,1)*scaling;
      kl.ePointInOctaveX = linesmat_src.at<float>(j,2)*scaling;
      kl.ePointInOctaveY = linesmat_src.at<float>(j,3)*scaling;
 
@@ -143,7 +143,7 @@ void line_lbd_detect::detect_raw_lines(const cv::Mat& gray_img, std::vector< Key
   {
       cv::Mat mask1 = Mat::ones( gray_img.size(), CV_8UC1 );  
       lbd->detect( gray_img, keylines_out, mask1 );
-  }     
+  }
 }
 
 
@@ -185,6 +185,16 @@ void line_lbd_detect::detect_raw_lines(const Mat& gray_img, cv::Mat& lines_mat, 
 }
 
 
+void line_lbd_detect::get_line_descriptors(const cv::Mat& gray_img, const cv::Mat& linesmat_src, cv::Mat& line_descrips)
+{
+    std::vector<KeyLine> keylines;
+//     std::cout<<"input line mat   "<<linesmat_src<<std::endl;
+    mat_to_keylines(linesmat_src, keylines, gray_img.cols, gray_img.rows);    
+    lbd->compute( gray_img, keylines, line_descrips);
+//     std::cout<<"matline to keylines:   "<<linesmat_src.rows<<"   "<<keylines.size()<<"   "<<line_descrips.rows<<std::endl;
+}
+
+
 void line_lbd_detect::filter_lines(std::vector< KeyLine>& keylines_in,std::vector< KeyLine>& keylines_out)
 {  
   keylines_out.clear();  
@@ -220,13 +230,13 @@ void line_lbd_detect::detect_descrip_lines(const cv::Mat& gray_img, cv::Mat& lin
 }
 
 
-void line_lbd_detect::detect_descrip_lines(const cv::Mat& gray_img, std::vector< KeyLine>& keylines_out, cv::Mat& line_descrips)
+void line_lbd_detect::detect_descrip_lines(const cv::Mat& gray_img, std::vector<KeyLine>& keylines_out, cv::Mat& line_descrips)
 {
   std::vector<KeyLine> keylines;
   cv::Mat descrip_raw;  
 
   detect_raw_lines(gray_img, keylines); 
- 
+
   lbd->compute( gray_img, keylines, descrip_raw);  //remove some lines before compute descriptprs to save time.  but the keylines index must be continuous.
 //   std::cout<<"marker 1.1  finish detect raw lines"<<std::endl;
   
@@ -241,7 +251,7 @@ void line_lbd_detect::detect_descrip_lines(const cv::Mat& gray_img, std::vector<
 	 }  
 }
 
-//change angle from [-180,180] to [-90,90]
+//change angle from [-pi,pi] to [-pi/2,pi/2]
 float normalize_to_PI(float angle)
 {
     if (angle > PI/2)
@@ -309,7 +319,6 @@ void line_lbd_detect::detect_descrip_lines_octaves(const cv::Mat& gray_img, std:
 }
 
 
-
 void line_lbd_detect::match_line_descrip(const cv::Mat& descrips_query, const cv::Mat& descrips_train, \
 					vector< DMatch>& good_matches,float matching_dist_thres)
 {
@@ -325,7 +334,7 @@ void line_lbd_detect::match_line_descrip(const cv::Mat& descrips_query, const cv
     for ( int i = 0; i < (int) matches.size(); i++ )
     {
       if( matches[i].distance < matching_dist_thres )
-	good_matches.push_back( matches[i] );
+	  	good_matches.push_back( matches[i] );
     }
 }
   

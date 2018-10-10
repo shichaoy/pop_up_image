@@ -6,10 +6,9 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roslib
   cmake_modules
   cv_bridge
-  image_geometry
-  image_transport
   pcl_conversions
   roscpp
   sensor_msgs    
@@ -35,7 +34,7 @@ find_package (PythonLibs 2.7 REQUIRED)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS cmake_modules cv_bridge image_geometry image_transport pcl_conversions roscpp sensor_msgs line_lbd
+  CATKIN_DEPENDS cmake_modules roslib cv_bridge pcl_conversions roscpp sensor_msgs line_lbd
   #DEPENDS system_lib
 )
 

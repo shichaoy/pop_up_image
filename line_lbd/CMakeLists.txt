@@ -5,7 +5,7 @@ project(line_lbd)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  cmake_modules 
+  cmake_modules
 )
 
 ## System dependencies are found with CMake's conventions

@@ -1,5 +1,4 @@
 /*
- * line_detection interface
  * Copyright Shichao Yang,2016, Carnegie Mellon University
  * Email: shichaoy@andrew.cmu.edu
  *
@@ -7,7 +6,6 @@
 
 #include "pop_up_wall/popup_plane.h"
 #include "pop_up_wall/matrix_utils.h"
-// #include "interval_tree/IntervalTree.h"
 
 using namespace std;
 using namespace cv;
@@ -24,16 +22,16 @@ popup_plane::popup_plane():nn( "~" )
   // 	   0,   0,   1;
     Kalib << 371.975264, 0, 315.632343,   //ueye
 	    0, 372.163582, 250.592551, 
-	    0,   0,   1;	   
+	    0,   0,   1;
     invK=Kalib.inverse();
+    
     
     all_planes_world.resize(1,4);
     all_planes_sensor.resize(1,4);
       
     erosion_distance=11;
     dilation_distance=11;
-    
-    ceiling_threshold=2.5;
+
     pcl_cloud_world.reset(new pclRGB);
     
     inited_python=false;
@@ -204,7 +202,7 @@ void popup_plane::find_2d_3d_closed_polygon(const Matrix4f& transToWolrd)
 	      vert_stack_v_self(ground_seg2d_closed,end_hit_bound);
     }
       
-    seg=0;  //considering the last segment
+    seg=0;  //considering the first segment wall
     begin_hit_bound=boudaryies_hits_down.row(seg).head(2);
     end_hit_bound=boudaryies_hits_down.row(seg).tail(2);
     if (ground_seg2d_lines_connect(seg,1)==height-1 && ground_seg2d_lines_connect(seg,0)>0)  {}  

@@ -34,8 +34,8 @@
 
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
-#include <image_transport/image_transport.h>
-#include <image_geometry/pinhole_camera_model.h>
+//#include <image_transport/image_transport.h>
+//#include <image_geometry/pinhole_camera_model.h>
 #include <pcl_conversions/pcl_conversions.h>
 
 // Eigen
@@ -72,6 +72,15 @@ protected:
   bp::object* py_module;
   bp::object py_dictionary;
   bool inited_python;
+
+public:
+  //some popup parameters  
+  float ceiling_threshold = 2.5;     // ceiling height threshold
+  bool downsample_contour=false;
+  bool use_fast_edges_detection=false;
+  // 3d plane distance threshold   camera distance to wall plane segments. cam dist to cloest wall endpoint
+  double plane_cam_dist_thre=10;  
+
 public:
   ros::NodeHandle nn;  // to parse the parameters
 
@@ -169,13 +178,9 @@ public:
   double pre_proj_cover_thre=0.6;
   double pre_proj_cover_large_thre=0.8;
   double pre_proj_dist_thre=100;	    
-	    
-  double ceiling_threshold; // ceiling height threshold
+
   int cloud_downsample_rate=20;  // only used in final fetching. actually matter less
-  bool downsample_contour=false;
-  bool use_fast_edges_detection=false;
-  // 3d plane distance threshold
-  double plane_cam_dist_thre=10;
+
   
   
 };

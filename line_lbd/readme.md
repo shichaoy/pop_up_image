@@ -12,7 +12,3 @@ http://docs.opencv.org/3.0-beta/modules/line_descriptor/doc/tutorial.html
 
 # Maintainer and contacts
 Shichao Yang (shichaoy@andrew.cmu.edu)
-
-
-# License
-Copyright (c), OpenCV BSD

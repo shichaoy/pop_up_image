@@ -1,5 +1,4 @@
 /*
- * line_detection interface
  * Copyright Shichao Yang,2016, Carnegie Mellon University
  * Email: shichaoy@andrew.cmu.edu
  *

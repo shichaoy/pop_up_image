@@ -1,5 +1,4 @@
 /*
- * line_detection interface
  * Copyright Shichao Yang,2016, Carnegie Mellon University
  * Email: shichaoy@andrew.cmu.edu
  *
@@ -169,6 +168,7 @@ float point_proj_lineseg(const Vector2f &begin_pt, const Vector2f &end_pt, const
   float t = ((query_pt-begin_pt).dot(end_pt-begin_pt))/length/length;
   return t;  
 }
+
 
 float point_dist_line(const Vector2f &begin_pt, const Vector2f &end_pt, const Vector2f &query_pt)
 {  // v w p
