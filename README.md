@@ -1,5 +1,7 @@
 # Pop Single Image #
-This code contains algorithm to pop up a 3D plane model from images. Given a RGB and ground segmentation image, the algorithm detects edges and selecs the ground-wall boundary edges then pops up 3D point cloud. It is extended to pop-up [plane slam](https://github.com/shichaoy/pop_up_slam).
+This code contains algorithm to pop up a 3D plane model from images. Given a RGB and ground segmentation image, the algorithm detects edges and selecs the ground-wall boundary edges then pops up 3D point cloud. 
+
+**NOTE**  It is updated and extended to multi-view pop-up [**plane slam**](https://github.com/shichaoy/pop_up_slam). See the ```pop_up_wall``` package there.
 
 **Authors:** [Shichao Yang](http://www.frc.ri.cmu.edu/~syang/)
 
